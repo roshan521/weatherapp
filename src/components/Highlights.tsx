@@ -54,12 +54,22 @@ const Highlights: FC<HighlightsProps> = ({
 }): ReactElement => {
 	const getSunrise = (): string => {
 		let sunrise: Date = new Date(weatherData?.current?.sunrise * 1000);
-		return `${sunrise.getHours()}:${sunrise.getMinutes()}`;
+		let hour =
+			sunrise.getHours() > 12 ? sunrise.getHours() - 12 : sunrise.getHours();
+		return `${hour > 24 ? "0" + hour : hour}:${
+			sunrise.getMinutes() < 10
+				? "0" + sunrise.getMinutes()
+				: sunrise.getMinutes()
+		}`;
 	};
 
 	const getSunset = () => {
 		let sunset = new Date(weatherData?.current?.sunset * 1000);
-		return `${sunset.getHours()}:${sunset.getMinutes()}`;
+		let hour =
+			sunset.getHours() > 12 ? sunset.getHours() - 12 : sunset.getHours();
+		return `${hour < 10 ? "0" + hour : hour}:${
+			sunset.getMinutes() < 10 ? "0" + sunset.getMinutes() : sunset.getMinutes()
+		}`;
 	};
 	let globalSymbol = useContext(SymbolContext);
 	return (
